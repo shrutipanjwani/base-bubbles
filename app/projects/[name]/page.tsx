@@ -5,24 +5,25 @@ import { useEffect, useState } from "react";
 import ModulesFooter from "@/components/ModulesFooter";
 import { projectsDetails, ProjectDetails } from "@/data/projects";
 import Link from "next/link";
+import { useParams } from "next/navigation";
 
-interface ProjectPageProps {
-  params: {
-    name: string;
-  };
-}
+const ProjectPage = () => {
+  // Use the useParams hook to get route params
+  const params = useParams();
+  const projectName = params.name as string;
 
-const ProjectPage: React.FC<ProjectPageProps> = ({ params }) => {
   const [projectDetails, setProjectDetails] = useState<ProjectDetails | null>(
     null
   );
 
   useEffect(() => {
-    const details = projectsDetails[params.name];
-    if (details) {
-      setProjectDetails(details);
+    if (projectName) {
+      const details = projectsDetails[projectName];
+      if (details) {
+        setProjectDetails(details);
+      }
     }
-  }, [params.name]);
+  }, [projectName]);
 
   if (!projectDetails) {
     return (

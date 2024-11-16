@@ -5,7 +5,6 @@ import { useLogin, useLogout, usePrivy } from "@privy-io/react-auth";
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import truncateAddress from "@/utils/truncateAddress";
 import WhiteButton from "@/components/Button/WhiteButton";
 import { useStreak } from "@/hooks/useStreak";
 import { base } from "viem/chains";
@@ -53,7 +52,6 @@ export const UserMenu = () => {
   );
 
   const fullAddress = smartWallet?.address || user?.wallet?.address;
-  const truncatedAddress = truncateAddress(fullAddress);
 
   const getUserDisplayInfo = () => {
     if (user?.google) return { type: "google", value: user.google.email };

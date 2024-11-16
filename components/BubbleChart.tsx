@@ -8,7 +8,6 @@ import {
 } from "@/types/registry";
 import { getCategoryColor, formatMetricValue } from "@/services/duneService";
 import { formatProjectName } from "@/utils/formatting";
-import Link from "next/link";
 import WaveButton from "./Button/WaveButton";
 
 interface BubbleChartProps {

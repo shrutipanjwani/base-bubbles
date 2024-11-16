@@ -1,32 +1,33 @@
-import React from "react";
+// components/Button/WaveButton.tsx
+import React, { AnchorHTMLAttributes } from "react";
 
-interface WaveButtonProps {
+interface WaveButtonProps extends AnchorHTMLAttributes<HTMLAnchorElement> {
   children?: React.ReactNode;
-  props?: any;
   additionalStyles?: string;
   liquidStyles?: string;
   type?: "submit" | "button" | "reset";
-  onClick?: (e: React.MouseEvent<HTMLElement>) => void;
+  onClick?: (e: React.MouseEvent<HTMLAnchorElement>) => void;
   link?: string;
   openInNewTab?: boolean;
 }
 
 const WaveButton = ({
   children,
-  type,
   onClick,
   link,
   openInNewTab,
-  additionalStyles,
-  liquidStyles,
+  additionalStyles = "",
+  liquidStyles = "",
   ...props
 }: WaveButtonProps) => {
   return (
     <a
       href={link}
-      {...props}
+      target={openInNewTab ? "_blank" : undefined}
+      rel={openInNewTab ? "noopener noreferrer" : undefined}
       onClick={onClick}
       className={`wave-button rounded-full py-2 px-10 text-center cursor-pointer font-polysans uppercase ${additionalStyles}`}
+      {...props}
     >
       <span>{children}</span>
       <div className={`liquid ${liquidStyles}`}></div>

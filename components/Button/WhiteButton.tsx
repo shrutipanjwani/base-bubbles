@@ -1,44 +1,58 @@
-import React from "react";
+// components/Button/WhiteButton.tsx
+import React, { ButtonHTMLAttributes, AnchorHTMLAttributes } from "react";
 
-interface ButtonProps {
+type HTMLButtonProps = ButtonHTMLAttributes<HTMLButtonElement>;
+type HTMLAnchorProps = AnchorHTMLAttributes<HTMLAnchorElement>;
+
+interface BaseButtonProps {
   children?: React.ReactNode;
-  props?: any;
   additionalStyles?: string;
-  type?: any;
+  type?: "button" | "submit" | "reset" | "link";
   onClick?: (e: React.MouseEvent<HTMLElement>) => void;
   link?: string;
   openInNewTab?: boolean;
 }
+
+type ButtonProps = BaseButtonProps &
+  (
+    | ({ type: "link" } & HTMLAnchorProps)
+    | ({ type?: "button" | "submit" | "reset" } & HTMLButtonProps)
+  );
 
 const buttonStyles =
   "relative inline-flex items-center text-black bg-white rounded-full";
 
 const WhiteButton = ({
   children,
-  type,
+  type = "button",
   onClick,
   link,
   openInNewTab,
-  additionalStyles,
+  additionalStyles = "",
   ...props
 }: ButtonProps) => {
-  return type === "link" ? (
-    <a
-      href={link}
-      {...props}
-      target={openInNewTab ? "_blank" : ""}
-      rel={openInNewTab ? "noopener noreferrer" : ""}
-      className={`${buttonStyles} ${additionalStyles} cursor-pointer`}
-    >
-      {children}
-    </a>
-  ) : (
+  if (type === "link") {
+    return (
+      <a
+        href={link}
+        target={openInNewTab ? "_blank" : undefined}
+        rel={openInNewTab ? "noopener noreferrer" : undefined}
+        className={`${buttonStyles} ${additionalStyles} cursor-pointer`}
+        onClick={onClick}
+        {...(props as HTMLAnchorProps)}
+      >
+        {children}
+      </a>
+    );
+  }
+
+  return (
     <div className="btn-holder">
       <button
-        type={type ? "button" : "submit"}
-        {...props}
+        type={type}
         onClick={onClick}
         className={`${buttonStyles} ${additionalStyles}`}
+        {...(props as HTMLButtonProps)}
       >
         <span>{children}</span>
       </button>
