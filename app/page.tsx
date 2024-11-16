@@ -8,6 +8,11 @@ import { FilterOptions, FilterMetric, Category } from "@/types/registry";
 import { fetchDuneData, processDuneData } from "@/services/duneService";
 import Loading from "@/components/Loading";
 import { useSearchParams, useRouter } from "next/navigation";
+import Image from "next/image";
+import Link from "next/link";
+import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
+import { CategorySelect } from "@/components/CategorySelect";
+import { CategoryLegend } from "@/components/CategoryLegend";
 
 export default function Home() {
   const router = useRouter();
@@ -19,7 +24,7 @@ export default function Home() {
   });
 
   const [filters, setFilters] = useState<FilterOptions>({
-    category: [],
+    category: [] as Category[],
     metric: "txs" as FilterMetric,
   });
 
@@ -68,81 +73,94 @@ export default function Home() {
   }
 
   const processedData = data ? processDuneData(data, filters.metric) : [];
-  const filteredData = processedData.filter(
-    (entry) =>
-      filters.category.length === 0 ||
-      filters.category.includes(entry.category as Category)
-  );
+  const filteredData = processedData.filter((entry) => {
+    const category = entry.category as Category;
+    return filters.category.length === 0 || filters.category.includes(category);
+  });
 
   return (
     <div className="h-full relative isolate bg-no-repeat bg-cover bg-center bg-[url('/modules-bg.svg')] overflow-hidden">
-      <div className="mx-auto max-w-7xl">
-        <h1 className="text-4xl font-cg-bold text-white my-8">Base Bubbles</h1>
-
-        {/* Controls */}
-        <div className="flex gap-4 items-end mb-8">
-          <div className="w-64">
-            <label className="block text-sm font-medium text-gray-200 mb-2">
-              Metric
-            </label>
-            <select
-              className="w-full h-10 bg-transparent border border-gray-700 rounded-lg px-3 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
-              value={filters.metric}
-              onChange={(e) =>
-                setFilters({
-                  ...filters,
-                  metric: e.target.value as FilterMetric,
-                })
-              }
-            >
-              {metrics.map((metric) => (
-                <option key={metric.value} value={metric.value}>
-                  {metric.label}
-                </option>
-              ))}
-            </select>
+      <header className="absolute inset-x-0 top-0 z-10">
+        <nav
+          className="mx-auto flex max-w-8xl items-center justify-between px-6 py-4"
+          aria-label="Global"
+        >
+          <div className="flex lg:flex-1">
+            <Link href="/" className="flex items-center gap-2">
+              <Image
+                src={`/logo_blue.png`}
+                alt="Basics"
+                className="w-6"
+                width={100}
+                height={100}
+                unoptimized
+              />
+              <span className="text-gray-200 text-lg">Base bubbles</span>
+            </Link>
           </div>
 
-          <div className="w-64">
-            <label className="block text-sm font-medium text-gray-200 mb-2">
-              Category
-            </label>
-            <select
-              className="w-full h-10 bg-transparent border border-gray-700 rounded-lg px-3 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
-              value={filters.category}
-              onChange={(e) =>
-                setFilters({
-                  ...filters,
-                  category: [e.target.value] as Category[],
-                })
-              }
-            >
-              <option value="">All Categories</option>
-              {categories.map((category) => (
-                <option key={category} value={category}>
-                  {category}
-                </option>
-              ))}
-            </select>
+          <div className="flex lg:hidden gap-x-8 items-center">
+            <div className="w-80 relative flex items-center">
+              <div className="w-full flex rounded-3xl bg-black ring-1 ring-inset ring-white/10 px-1">
+                <span className="flex select-none items-center pl-3 text-gray-500 sm:text-sm">
+                  <MagnifyingGlassIcon className="w-5 h-5 text-gray-500" />
+                </span>
+                <input
+                  type="text"
+                  name="search"
+                  id="search"
+                  placeholder="Search projects built on Base"
+                  value={searchTerm}
+                  onChange={(e) => updateSearch(e.target.value)}
+                  className="outline-none flex-1 border-0 bg-transparent font-polysans py-2 pl-1 text-white focus:ring-0 sm:text-sm sm:leading-6"
+                />
+                <div className="absolute inset-y-2 right-0 flex py-1 pr-4">
+                  <kbd className="inline-flex items-center rounded-md border border-gray-500 px-1 font-sans text-xs text-gray-500">
+                    ⌘K
+                  </kbd>
+                </div>
+              </div>
+            </div>
           </div>
+        </nav>
+      </header>
 
-          <div className="w-64">
-            <label className="block text-sm font-medium text-gray-200 mb-2">
-              Search
-            </label>
-            <input
-              type="text"
-              placeholder="Search projects..."
-              className="w-full h-10 bg-transparent border border-gray-700 rounded-lg px-3 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
-              value={searchTerm}
-              onChange={(e) => updateSearch(e.target.value)}
-            />
-          </div>
+      <div className="flex gap-x-2 mt-20 max-w-8xl px-6 mx-auto">
+        <div className="w-60">
+          <label className="block text-sm font-medium text-gray-200 mb-2">
+            Metric
+          </label>
+          <select
+            className="w-full h-10 bg-transparent border border-gray-700 rounded-lg px-3 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+            value={filters.metric}
+            onChange={(e) =>
+              setFilters({
+                ...filters,
+                metric: e.target.value as FilterMetric,
+              })
+            }
+          >
+            {metrics.map((metric) => (
+              <option key={metric.value} value={metric.value}>
+                {metric.label}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        <CategorySelect
+          value={filters.category}
+          onChange={(category) => setFilters((prev) => ({ ...prev, category }))}
+          categories={categories}
+        />
+        {/* Category legend */}
+        <div className="p-4 rounded-lg backdrop-blur-sm">
+          <CategoryLegend />
         </div>
       </div>
 
       {/* Visualization */}
-      <div className="h-[calc(100vh-200px)]">
+      <div className="h-[calc(100vh-100px)]">
         <BubbleChart
           data={filteredData.map((item) => ({
             ...item,

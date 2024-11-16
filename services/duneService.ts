@@ -1,5 +1,6 @@
 // services/duneService.ts
 import axios from "axios";
+import { determineCategory, getAllCategories } from "@/utils/categoryMapping";
 import { DuneProjectData, Category, FilterMetric } from "@/types/registry";
 
 const DUNE_API_KEY = process.env.NEXT_PUBLIC_DUNE_API_KEY as string;
@@ -70,13 +71,16 @@ export const processDuneData = (
   data: DuneProjectData[],
   metric: FilterMetric
 ) => {
-  return data.map((project) => ({
-    id: project.name,
-    value: getMetricValue(project, metric),
-    category: categorizeProject(project.name),
-    data: project,
-    growth: getGrowthValue(project, metric),
-  }));
+  return data.map((project) => {
+    const category = determineCategory(project.name);
+    return {
+      id: project.name,
+      value: getMetricValue(project, metric),
+      category,
+      data: project,
+      growth: getGrowthValue(project, metric),
+    };
+  });
 };
 
 // Fixed categorization function with proper type checking

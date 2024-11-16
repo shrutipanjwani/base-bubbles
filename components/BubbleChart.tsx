@@ -8,6 +8,7 @@ import {
 } from "@/types/registry";
 import { getCategoryColor, formatMetricValue } from "@/services/duneService";
 import { formatProjectName } from "@/utils/formatting";
+import Link from "next/link";
 
 interface BubbleChartProps {
   data: ProcessedProjectData[];
@@ -30,7 +31,7 @@ export const BubbleChart = ({
   data,
   filters,
   searchTerm = "",
-  width = window.innerWidth - 100,
+  width = window.innerWidth,
   height = window.innerHeight,
 }: BubbleChartProps) => {
   const svgRef = useRef<SVGSVGElement>(null);
@@ -336,14 +337,14 @@ export const BubbleChart = ({
                 </div>
               </div>
               <div className="mt-4 pt-4 border-t border-gray-700">
-                <a
-                  href={`/${selectedNode.data.name
+                <Link
+                  href={`/projects/${selectedNode.data.name
                     .toLowerCase()
                     .replace(/\s+/g, "-")}`}
                   className="block w-full text-center py-2 px-4 bg-blue-500 hover:bg-blue-600 rounded-lg transition-colors"
                 >
                   Learn more about {formatProjectName(selectedNode.data.name)}
-                </a>
+                </Link>
               </div>
             </div>
           </div>

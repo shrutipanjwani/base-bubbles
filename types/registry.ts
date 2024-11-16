@@ -5,6 +5,7 @@ export type Category =
   | "Games"
   | "Social"
   | "Other";
+
 export type FilterMetric =
   | "total_txs"
   | "total_users"
