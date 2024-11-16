@@ -5,8 +5,8 @@ import { useLogin, useLogout, usePrivy } from "@privy-io/react-auth";
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import WhiteButton from "@/components/Button/WhiteButton";
-import { useStreak } from "@/hooks/useStreak";
+import WhiteButton from "../components/Button/WhiteButton";
+import { useStreak } from "../hooks/useStreak";
 import { base } from "viem/chains";
 import {
   Avatar,

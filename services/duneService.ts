@@ -1,7 +1,7 @@
 // services/duneService.ts
 import axios from "axios";
-import { determineCategory, getAllCategories } from "@/utils/categoryMapping";
-import { DuneProjectData, Category, FilterMetric } from "@/types/registry";
+import { determineCategory } from "../utils/categoryMapping";
+import { DuneProjectData, Category, FilterMetric } from "../types/registry";
 
 const DUNE_API_KEY = process.env.NEXT_PUBLIC_DUNE_API_KEY as string;
 const DUNE_API_URL = "https://api.dune.com/api/v1/endpoints";
@@ -82,29 +82,6 @@ export const processDuneData = (
     };
   });
 };
-
-// Fixed categorization function with proper type checking
-const categorizeProject = (projectName: string): Category => {
-  // Define project name patterns for each category
-  const categoryPatterns: Record<Category, RegExp[]> = {
-    DeFi: [/uniswap/i, /swap/i, /dex/i, /finance/i, /lending/i],
-    Infrastructure: [/bridge/i, /protocol/i, /infrastructure/i],
-    NFTs: [/nft/i, /collection/i, /art/i],
-    Games: [/game/i, /play/i, /gaming/i],
-    Social: [/social/i, /chat/i, /message/i],
-    Other: [/.*/], // Matches everything - used as fallback
-  };
-
-  // Check each category's patterns
-  for (const [category, patterns] of Object.entries(categoryPatterns)) {
-    if (patterns.some((pattern) => pattern.test(projectName))) {
-      return category as Category;
-    }
-  }
-
-  return "Other";
-};
-
 // Add helper to get category color
 export const getCategoryColor = (category: Category): string => {
   const colors: Record<Category, string> = {

@@ -1,5 +1,5 @@
 import { Category } from "@/types/registry";
-import { getCategoryColor } from "@/services/duneService";
+import { getCategoryColor } from "../services/duneService";
 
 export const CategoryLegend = () => {
   const categories: Category[] = [

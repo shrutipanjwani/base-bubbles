@@ -6,8 +6,8 @@ import {
   FilterOptions,
   Category,
 } from "@/types/registry";
-import { getCategoryColor, formatMetricValue } from "@/services/duneService";
-import { formatProjectName } from "@/utils/formatting";
+import { getCategoryColor, formatMetricValue } from "../services/duneService";
+import { formatProjectName } from "../utils/formatting";
 import WaveButton from "./Button/WaveButton";
 
 interface BubbleChartProps {

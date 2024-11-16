@@ -1,5 +1,5 @@
-import { getAllCategories, getCategoryLabel } from "@/utils/categoryMapping";
-import { getCategoryColor } from "@/services/duneService";
+import { getAllCategories, getCategoryLabel } from "../utils/categoryMapping";
+import { getCategoryColor } from "../services/duneService";
 import { Category } from "@/types/registry";
 
 interface CategorySelectProps {
