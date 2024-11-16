@@ -6,7 +6,7 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
-import { UserMenu } from "@/components/UserMenu";
+import { UserMenu } from "../components/UserMenu";
 
 export function PageHeader() {
   const router = useRouter();

@@ -2,8 +2,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import ModulesFooter from "@/components/ModulesFooter";
-import { projectsDetails, ProjectDetails } from "@/data/projects";
+import ModulesFooter from "../../../components/ModulesFooter";
+import { projectsDetails, ProjectDetails } from "../../../data/projects";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 

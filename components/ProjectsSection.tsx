@@ -5,11 +5,11 @@ import { useState } from "react";
 import { useSearchParams } from "next/navigation";
 import useSWR from "swr";
 import { FilterOptions, FilterMetric, Category } from "@/types/registry";
-import { fetchDuneData, processDuneData } from "@/services/duneService";
-import { BubbleChart } from "@/components/BubbleChart";
-import { CategorySelect } from "@/components/CategorySelect";
-import { CategoryLegend } from "@/components/CategoryLegend";
-import Loading from "@/components/Loading";
+import { fetchDuneData, processDuneData } from "../services/duneService";
+import { BubbleChart } from "../components/BubbleChart";
+import { CategorySelect } from "../components/CategorySelect";
+import { CategoryLegend } from "../components/CategoryLegend";
+import Loading from "../components/Loading";
 
 export function ProjectsSection() {
   const searchParams = useSearchParams();
