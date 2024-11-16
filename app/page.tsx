@@ -2,10 +2,10 @@
 "use client";
 
 import { Suspense } from "react";
-import Loading from "@/components/Loading";
-import { PageHeader } from "@/components/PageHeader";
-import { ProjectsSection } from "@/components/ProjectsSection";
-import ModulesFooter from "@/components/ModulesFooter";
+import Loading from "../components/Loading";
+import { PageHeader } from "../components/PageHeader";
+import { ProjectsSection } from "../components/ProjectsSection";
+import ModulesFooter from "../components/ModulesFooter";
 
 export default function Home() {
   return (
