@@ -139,3 +139,58 @@ html {
     transform: translate(-50%, -75%) rotate(360deg);
   }
 }
+
+/* wave button  */
+.wave-button {
+  position: relative;
+  display: block;
+  text-decoration: none;
+  overflow: hidden;
+}
+
+.wave-button span {
+  position: relative;
+  z-index: 1;
+  color: #fff;
+  letter-spacing: 2px;
+}
+
+.wave-button .liquid {
+  position: absolute;
+  left: 0;
+  background: #527ffe;
+  box-sizing: inset 0 0 50px rgba(0, 0, 0, 0.5);
+  transition: 0.5s;
+}
+
+.wave-button .liquid::before,
+.wave-button .liquid::after {
+  content: "";
+  position: absolute;
+  width: 200%;
+  height: 200%;
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, -75%);
+}
+
+.wave-button .liquid::before {
+  border-radius: 45%;
+  background: rgba(20, 20, 20, 1);
+  animation: wave-button 5s linear infinite;
+}
+
+.wave-button .liquid::after {
+  border-radius: 40%;
+  background: rgba(20, 20, 20, 0.5);
+  animation: wave-button 10s linear infinite;
+}
+
+@keyframes wave-button {
+  0% {
+    transform: translate(-50%, -75%) rotate(0deg);
+  }
+  100% {
+    transform: translate(-50%, -75%) rotate(360deg);
+  }
+}

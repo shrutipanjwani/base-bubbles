@@ -9,6 +9,7 @@ import {
 import { getCategoryColor, formatMetricValue } from "@/services/duneService";
 import { formatProjectName } from "@/utils/formatting";
 import Link from "next/link";
+import WaveButton from "./Button/WaveButton";
 
 interface BubbleChartProps {
   data: ProcessedProjectData[];
@@ -337,14 +338,15 @@ export const BubbleChart = ({
                 </div>
               </div>
               <div className="mt-4 pt-4 border-t border-gray-700">
-                <Link
-                  href={`/projects/${selectedNode.data.name
+                <WaveButton
+                  link={`/projects/${selectedNode.data.name
                     .toLowerCase()
                     .replace(/\s+/g, "-")}`}
-                  className="block w-full text-center py-2 px-4 bg-blue-500 hover:bg-blue-600 rounded-lg transition-colors"
+                  additionalStyles="text-white text-sm py-2 px-4 group w-[200px]"
+                  liquidStyles="w-[200px] h-[180px] -top-[75px] group-hover:-top-[120px]"
                 >
-                  Learn more about {formatProjectName(selectedNode.data.name)}
-                </Link>
+                  Learn more
+                </WaveButton>
               </div>
             </div>
           </div>

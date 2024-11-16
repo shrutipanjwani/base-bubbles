@@ -1,4 +1,3 @@
-// pages/index.tsx
 "use client";
 
 import { useState, useEffect } from "react";
@@ -13,6 +12,15 @@ import Link from "next/link";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import { CategorySelect } from "@/components/CategorySelect";
 import { CategoryLegend } from "@/components/CategoryLegend";
+import { useLogin, useLogout, usePrivy } from "@privy-io/react-auth";
+import { useStreak } from "@/hooks/useStreak";
+import truncateAddress from "@/utils/truncateAddress";
+import { UserMenu } from "@/components/UserMenu";
+import ModulesFooter from "@/components/ModulesFooter";
+
+function classNames(...classes: string[]) {
+  return classes.filter(Boolean).join(" ");
+}
 
 export default function Home() {
   const router = useRouter();
@@ -26,6 +34,47 @@ export default function Home() {
   const [filters, setFilters] = useState<FilterOptions>({
     category: [] as Category[],
     metric: "txs" as FilterMetric,
+  });
+
+  const { logout } = useLogout({
+    onSuccess: () => {
+      router.push("/");
+    },
+  });
+
+  const { user } = usePrivy();
+
+  const smartWallet = user?.linkedAccounts.find(
+    (account) => account.type === "smart_wallet"
+  );
+
+  const fullAddress = smartWallet?.address || user?.wallet?.address;
+  const truncatedAddress = truncateAddress(fullAddress);
+
+  const { streakCount, buttonDisabled, handleGMClick, loading } = useStreak();
+
+  const { login } = useLogin({
+    onComplete: async (
+      user,
+      isNewUser,
+      wasAlreadyAuthenticated,
+      loginMethod,
+      linkedAccount
+    ) => {
+      console.log(
+        "User: ",
+        user,
+        "isNewUser: ",
+        isNewUser,
+        wasAlreadyAuthenticated,
+        loginMethod,
+        linkedAccount
+      );
+      router.push("/");
+    },
+    onError: (error) => {
+      console.log(error);
+    },
   });
 
   // Handle URL search params
@@ -122,10 +171,20 @@ export default function Home() {
               </div>
             </div>
           </div>
+
+          <div className="flex lg:flex-1 lg:justify-end gap-4 items-center">
+            <UserMenu />
+          </div>
         </nav>
       </header>
-
-      <div className="flex gap-x-2 mt-20 max-w-8xl px-6 mx-auto">
+      <div className="text-white mt-20 px-6 max-w-3xl text-lg">
+        <h1>
+          Discover new projects, protocols, and opportunities as you sail
+          through your learning adventure. You're always early when you're with
+          <span className="text-blue-500">&nbsp;Base Bubbles.</span>
+        </h1>
+      </div>
+      <div className="flex gap-x-2 mt-6 max-w-8xl px-6 mx-auto">
         <div className="w-60">
           <label className="block text-sm font-medium text-gray-200 mb-2">
             Metric
@@ -170,6 +229,7 @@ export default function Home() {
           searchTerm={searchTerm}
         />
       </div>
+      <ModulesFooter />
     </div>
   );
 }
