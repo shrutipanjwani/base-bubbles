@@ -342,8 +342,8 @@ export const BubbleChart = ({
                   link={`/projects/${selectedNode.data.name
                     .toLowerCase()
                     .replace(/\s+/g, "-")}`}
-                  additionalStyles="text-white text-sm py-2 px-4 group w-[200px]"
-                  liquidStyles="w-[200px] h-[180px] -top-[75px] group-hover:-top-[120px]"
+                  additionalStyles="text-white text-sm py-2 px-4 group w-[180px]"
+                  liquidStyles="w-[180px] h-[180px] -top-[75px] group-hover:-top-[120px]"
                 >
                   Learn more
                 </WaveButton>
