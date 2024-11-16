@@ -7,6 +7,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { base, baseSepolia } from "viem/chains";
 import { http } from "viem";
 import { WagmiProvider, createConfig } from "@privy-io/wagmi";
+import { OnchainKitProvider } from "@coinbase/onchainkit";
 
 export const wagmiConfig = createConfig({
   chains: [baseSepolia, base],
@@ -49,7 +50,12 @@ const ClientProvider = ({ children }: any) => {
     >
       <QueryClientProvider client={queryClient}>
         <WagmiProvider config={wagmiConfig} reconnectOnMount={false}>
-          <SmartWalletsProvider>{children}</SmartWalletsProvider>
+          <OnchainKitProvider
+            apiKey={process.env.NEXT_PUBLIC_ONCHAINKIT_API_KEY}
+            chain={defaultChain} // add baseSepolia for testing
+          >
+            <SmartWalletsProvider>{children}</SmartWalletsProvider>
+          </OnchainKitProvider>
         </WagmiProvider>
       </QueryClientProvider>
     </PrivyProvider>

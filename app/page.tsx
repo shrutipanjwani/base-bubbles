@@ -12,9 +12,6 @@ import Link from "next/link";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import { CategorySelect } from "@/components/CategorySelect";
 import { CategoryLegend } from "@/components/CategoryLegend";
-import { useLogin, useLogout, usePrivy } from "@privy-io/react-auth";
-import { useStreak } from "@/hooks/useStreak";
-import truncateAddress from "@/utils/truncateAddress";
 import { UserMenu } from "@/components/UserMenu";
 import ModulesFooter from "@/components/ModulesFooter";
 
@@ -34,47 +31,6 @@ export default function Home() {
   const [filters, setFilters] = useState<FilterOptions>({
     category: [] as Category[],
     metric: "txs" as FilterMetric,
-  });
-
-  const { logout } = useLogout({
-    onSuccess: () => {
-      router.push("/");
-    },
-  });
-
-  const { user } = usePrivy();
-
-  const smartWallet = user?.linkedAccounts.find(
-    (account) => account.type === "smart_wallet"
-  );
-
-  const fullAddress = smartWallet?.address || user?.wallet?.address;
-  const truncatedAddress = truncateAddress(fullAddress);
-
-  const { streakCount, buttonDisabled, handleGMClick, loading } = useStreak();
-
-  const { login } = useLogin({
-    onComplete: async (
-      user,
-      isNewUser,
-      wasAlreadyAuthenticated,
-      loginMethod,
-      linkedAccount
-    ) => {
-      console.log(
-        "User: ",
-        user,
-        "isNewUser: ",
-        isNewUser,
-        wasAlreadyAuthenticated,
-        loginMethod,
-        linkedAccount
-      );
-      router.push("/");
-    },
-    onError: (error) => {
-      console.log(error);
-    },
   });
 
   // Handle URL search params

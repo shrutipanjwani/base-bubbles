@@ -8,6 +8,14 @@ import Image from "next/image";
 import truncateAddress from "@/utils/truncateAddress";
 import WhiteButton from "@/components/Button/WhiteButton";
 import { useStreak } from "@/hooks/useStreak";
+import { base } from "viem/chains";
+import {
+  Avatar,
+  Identity,
+  Name,
+  Badge,
+  Address,
+} from "@coinbase/onchainkit/identity";
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ");
@@ -100,11 +108,20 @@ export const UserMenu = () => {
 
         {user ? (
           <MenuButton>
-            <div className="relative z-10">
-              <div className="active:scale-95 select-none rounded-lg flex items-center justify-start gap-2 subpixel-antialiased focus:outline-highlight focus:ring-0 border whitespace-nowrap group h-9 min-w-[2rem] border-transparent bg-white text-gray-10 hover:bg-gray-100 disabled:bg-gray-50 disabled:text-gray w-full px-2 py-2 font-polysans text-sm transition-all">
-                <div style={{ width: "120px" }}>{truncatedAddress}</div>
-              </div>
-            </div>
+            <Identity
+              address={fullAddress as `0x${string}`}
+              schemaId={fullAddress as `0x${string}`}
+            >
+              <Avatar className="w-8" />
+              <Name
+                address={fullAddress as `0x${string}`}
+                chain={base}
+                className="text-blue-500 text-sm"
+              >
+                <Badge className="bg-error" />
+              </Name>
+              <Address className="text-gray-500 text-xs" />
+            </Identity>
           </MenuButton>
         ) : (
           <WhiteButton onClick={() => login()}>
