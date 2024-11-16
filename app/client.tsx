@@ -17,9 +17,9 @@ export const wagmiConfig = createConfig({
   },
 });
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const ClientProvider = ({ children }: any) => {
-  const PRIVY_APP_ID =
-    process.env.NEXT_PUBLIC_PRIVY_APP_ID || "cm3kj9tgk03nve7rkwk4ov5dv";
+  const PRIVY_APP_ID = process.env.NEXT_PUBLIC_PRIVY_APP_ID as string;
 
   const defaultChain =
     process.env.NODE_ENV === "production" ? base : baseSepolia;

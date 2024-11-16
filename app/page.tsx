@@ -15,10 +15,6 @@ import { CategoryLegend } from "@/components/CategoryLegend";
 import { UserMenu } from "@/components/UserMenu";
 import ModulesFooter from "@/components/ModulesFooter";
 
-function classNames(...classes: string[]) {
-  return classes.filter(Boolean).join(" ");
-}
-
 export default function Home() {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -136,7 +132,8 @@ export default function Home() {
       <div className="text-white mt-20 px-6 max-w-3xl text-lg">
         <h1>
           Discover new projects, protocols, and opportunities as you sail
-          through your learning adventure. You're always early when you're with
+          through your learning adventure. You&apos;re always early when
+          you&apos;re with
           <span className="text-blue-500">&nbsp;Base Bubbles.</span>
         </h1>
       </div>
