@@ -2,20 +2,140 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  body {
+    background-color: #0e1016;
+    overscroll-behavior: none;
+    overflow-x: hidden;
+    font-feature-settings: "rlig" 1, "calt" 1;
   }
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+::-moz-selection {
+  background-color: #527ffe;
+  color: #fff;
+}
+
+::selection {
+  color: #fff;
+  background-color: #527ffe;
+}
+
+input:-webkit-autofill {
+  filter: none;
+  -webkit-background-clip: text !important;
+  -webkit-box-shadow: 0 0 0px 1000px #101010 inset;
+  -webkit-text-fill-color: rgba(255, 255, 255, 255);
+  border-radius: 20px;
+}
+
+@font-face {
+  font-family: "PolySans Neutral";
+  src: url("/fonts/PolySans-Neutral.woff") format("opentype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "CabinetGrotesk Black";
+  src: url("/fonts/CabinetGrotesk-Black.woff") format("opentype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "CabinetGrotesk Bold";
+  src: url("/fonts/CabinetGrotesk-Bold.woff") format("opentype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "CabinetGrotesk ExtraBold";
+  src: url("/fonts/CabinetGrotesk-Extrabold.woff") format("opentype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "CabinetGrotesk Medium";
+  src: url("/fonts/CCabinetGrotesk-Medium.woff") format("opentype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "CabinetGrotesk Variable";
+  src: url("/fonts/CabinetGrotesk-Variable.woff") format("opentype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "CabinetGrotesk Regular";
+  src: url("/fonts/CabinetGrotesk-Regular.woff") format("opentype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "CabinetGrotesk Light";
+  src: url("/fonts/CabinetGrotesk-Light.woff") format("opentype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "CabinetGrotesk Thin";
+  src: url("/fonts/CabinetGrotesk-Thin.woff") format("opentype");
+  font-display: swap;
+}
+
+body,
+html {
+  overflow-x: hidden !important;
+  font-family: "PolySans Neutral";
+  background-color: #0e1016;
+}
+
+/* LOADING WAVE  */
+.circle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100px;
+  height: 100px;
+  background: #ccc;
+  border: 5px solid #527ffe;
+  border-radius: 50%;
+  overflow: hidden;
+}
+.wave {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: #527ffe;
+  border-radius: 50%;
+  box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.5);
+}
+.wave:before,
+.wave:after {
+  content: "";
+  position: absolute;
+  width: 200%;
+  height: 200%;
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, -75%);
+}
+.wave:before {
+  border-radius: 45%;
+  background: rgba(0, 0, 0, 1);
+  animation: circle 5s linear infinite;
+}
+.wave:after {
+  border-radius: 40%;
+  background: rgba(0, 0, 0, 0.5);
+  animation: circle 10s linear infinite;
+}
+@keyframes circle {
+  0% {
+    transform: translate(-50%, -75%) rotate(0deg);
+  }
+  100% {
+    transform: translate(-50%, -75%) rotate(360deg);
+  }
 }
