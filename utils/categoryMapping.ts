@@ -21,6 +21,7 @@ const PROJECT_CATEGORIES: ProjectCategoryMapping = {
   aave: "DeFi",
   compound: "DeFi",
   balancer: "DeFi",
+  aerodrome: "DeFi",
 
   // Infrastructure Projects
   layerzero: "Infrastructure",
