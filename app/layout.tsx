@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import "@coinbase/onchainkit/styles.css";
+import "./onchainkit.css";
 import ClientProvider from "./client";
 
 export const metadata: Metadata = {
